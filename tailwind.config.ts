@@ -8,11 +8,24 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      fontFamily: {
+        'akaya': ['"Akaya Kanadaka"', 'cursive']
       },
+      margin: {
+        '1000px': '1000px',
+        '268px': '268px',
+        '500px': '500px',
+        '244px': '244px',
+        '586px': '586px'
+      },
+      height: {
+        '456px': '456px',
+        '323px': '323px'
+      },
+      width: {
+        '739px': '739px',
+        '649px': '649px'
+      }
     },
   },
   plugins: [],
