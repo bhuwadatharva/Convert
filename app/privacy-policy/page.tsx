@@ -3,7 +3,7 @@ import privacy from "@/public/images/privacy.png";
 export default function PrivacyPolicy() {
     return (
         <div>
-            <img src={privacy.src} className="ml-[500px]" alt="Privacy Policy"/>
+            <img src={privacy.src} className="ml-[500px]" alt="Privacy Policy" />
             <h1 className="ml-[586px] font-bold text-5xl mt-20">Privacy Policy</h1>
             <p className="ml-44 mt-10">
                 At [Website Name], we are committed to protecting your privacy and ensuring the security of your personal information. This Privacy Policy outlines how we collect, use, disclose, and protect the information you provide when using our PDF converter website.
@@ -23,7 +23,7 @@ export default function PrivacyPolicy() {
                 <h2 className="text-xl md:text-2xl ml-44 text-muted-foreground">2. Use of Information</h2>
                 <p className="ml-44">
                     We use the information collected through Google Analytics solely for the purpose of understanding
-                    user behavior and improving our website's performance. We do not sell, rent, or share this
+                    user behavior and improving our website&apos;s performance. We do not sell, rent, or share this
                     information with third parties.
                 </p>
             </div>
@@ -41,7 +41,7 @@ export default function PrivacyPolicy() {
                 <h2 className="text-xl md:text-2xl ml-44 text-muted-foreground">4. Disclosure of Information</h2>
                 <p className="ml-44">
                     We may share your personal information with trusted third parties who assist us in operating our website, conducting our business, or servicing you, as long as those parties agree to keep this information confidential.
-                    We may also disclose your information when we believe it is necessary to comply with the law, enforce our site policies, or protect ours or others' rights, property, or safety.
+                    We may also disclose your information when we believe it is necessary to comply with the law, enforce our site policies, or protect ours or others&apos; rights, property, or safety.
                 </p>
             </div>
 

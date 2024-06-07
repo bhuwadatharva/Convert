@@ -10,7 +10,7 @@ export default function About() {
                 <div>
                     <h1 className="font-bold text-5xl ml-44">ABOUT US</h1>
                     <p className="ml-44 mt-10 text-xl">
-                        "Unlock the power of seamless document conversion with our PDF converter website. Say goodbye to file format headaches as you effortlessly convert PDFs into editable documents. Whether it's Word, Excel, or PowerPoint, our user-friendly platform ensures precision and efficiency. Experience the convenience of instant conversion without compromising on quality. Join thousands of satisfied users who trust us for their document transformation needs. Embrace simplicity and reliability with our PDF converter today!"
+                        &quot;Unlock the power of seamless document conversion with our PDF converter website. Say goodbye to file format headaches as you effortlessly convert PDFs into editable documents. Whether it&apos;s Word, Excel, or PowerPoint, our user-friendly platform ensures precision and efficiency. Experience the convenience of instant conversion without compromising on quality. Join thousands of satisfied users who trust us for their document transformation needs. Embrace simplicity and reliability with our PDF converter today!&quot;
                     </p>
                 </div>
                 <img src={about.src} className="ml-80 -mr-28 h-64" />
@@ -29,7 +29,7 @@ export default function About() {
                                 <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white text-center">Image Conversion</h5>
                             </a>
                             <p className="mb-3 font-normal text-gray-700 dark:text-gray-400 text-base text-center">
-                                'Image conversion refers to the process of transforming an image from one file format, resolution, or color space to another.'
+                                &quot;Image conversion refers to the process of transforming an image from one file format, resolution, or color space to another.&quot;
                             </p>
                         </div>
                     </div>
@@ -43,7 +43,7 @@ export default function About() {
                                 <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white text-center">Audio Transformation</h5>
                             </a>
                             <p className="mb-3 font-normal text-gray-700 dark:text-gray-400 ml-7 text-base text-center">
-                                'Audio transformation involves altering or manipulating sound signals to achieve desired effects or enhancements.'
+                                &quot;Audio transformation involves altering or manipulating sound signals to achieve desired effects or enhancements.&quot;
                             </p>
                         </div>
                     </div>
@@ -57,7 +57,7 @@ export default function About() {
                                 <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white ml-5 text-center">Video Metamorphosis</h5>
                             </a>
                             <p className="mb-3 font-normal text-gray-700 dark:text-gray-400 ml-7 text-base text-center">
-                                'Video metamorphosis seamlessly transforms visual narratives, bridging imagination and reality through the art of digital evolution.'
+                                &quot;Video metamorphosis seamlessly transforms visual narratives, bridging imagination and reality through the art of digital evolution.&quot;
                             </p>
                         </div>
                     </div>
