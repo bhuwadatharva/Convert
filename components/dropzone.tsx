@@ -17,7 +17,7 @@ import { MdDone } from "react-icons/md";
 import { Badge } from "./ui/badge";
 import { HiOutlineDownload } from "react-icons/hi";
 import { BiError } from "react-icons/bi";
-import {Tabs, TabsContent, TabsList, TabsTrigger} from"./ui/tabs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 import {
   Select,
   SelectContent,
@@ -29,7 +29,7 @@ import { Button } from "./ui/button";
 import loadFfmpeg from "@/utils/load-ffmpeg";
 import type { Action } from "@/types";
 import { FFmpeg } from "@ffmpeg/ffmpeg";
-import docpick from "../public/images/docpick.png"
+import docpick from "../public/images/docpick.png";
 
 const extensions = {
   image: [
@@ -79,7 +79,7 @@ export default function Dropzone() {
   const [is_done, setIsDone] = useState<boolean>(false);
   const ffmpegRef = useRef<any>(null);
   const [defaultValues, setDefaultValues] = useState<string>("video");
-  const [selcted, setSelected] = useState<string>("...");
+  const [selected, setSelected] = useState<string>("...");
   const accepted_files = {
     "image/*": [
       ".jpg",
@@ -185,7 +185,7 @@ export default function Dropzone() {
   };
   const handleHover = (): void => setIsHover(true);
   const handleExitHover = (): void => setIsHover(false);
-  const updateAction = (file_name: String, to: String) => {
+  const updateAction = (file_name: string, to: string) => {
     setActions(
       actions.map((action): Action => {
         if (action.file_name === file_name) {
@@ -260,7 +260,7 @@ export default function Dropzone() {
                 <BiError />
               </Badge>
             ) : action.is_converted ? (
-              <Badge  className="flex gap-2 border-[#E593E6]">
+              <Badge className="flex gap-2 border-[#E593E6]">
                 <span>Done</span>
                 <MdDone />
               </Badge>
@@ -284,7 +284,7 @@ export default function Dropzone() {
                     setSelected(value);
                     updateAction(action.file_name, value);
                   }}
-                  value={selcted}
+                  value={selected}
                 >
                   <SelectTrigger className="w-32 outline-none focus:outline-none focus:ring-0 text-center text-muted-foreground bg-background text-md font-medium">
                     <SelectValue placeholder="..." />
@@ -352,9 +352,7 @@ export default function Dropzone() {
             )}
 
             {action.is_converted ? (
-              <Button  onClick={() => download(action)}>
-                Download
-              </Button>
+              <Button onClick={() => download(action)}>Download</Button>
             ) : (
               <span
                 onClick={() => deleteAction(action)}
@@ -368,27 +366,23 @@ export default function Dropzone() {
         <div className="flex w-full justify-end">
           {is_done ? (
             <div className="space-y-4 w-fit">
-             <Button
-  className="rounded-xl font-semibold relative py-4 text-md flex gap-2 items-center w-full bg-[#E593E6]"
-  onClick={downloadAll}
->
-
+              <Button
+                className="rounded-xl font-semibold relative py-4 text-md flex gap-2 items-center w-full bg-[#E593E6]"
+                onClick={downloadAll}
+              >
                 {actions.length > 1 ? "Download All" : "Download"}
                 <HiOutlineDownload />
               </Button>
-              <Button
-                onClick={reset}
-                className="rounded-xl">
+              <Button onClick={reset} className="rounded-xl">
                 Convert Another File(s)
               </Button>
             </div>
           ) : (
             <Button
-                 disabled={!is_ready || is_converting}
-                 className="rounded-xl font-semibold relative py-4 text-md flex items-center w-44 bg-[#E593E6]"
-               onClick={convert}
-                >
-
+              disabled={!is_ready || is_converting}
+              className="rounded-xl font-semibold relative py-4 text-md flex items-center w-44 bg-[#E593E6]"
+              onClick={convert}
+            >
               {is_converting ? (
                 <span className="animate-spin text-lg">
                   <ImSpinner3 />
@@ -405,58 +399,58 @@ export default function Dropzone() {
 
   return (
     <ReactDropzone
-    onDrop={handleUpload}
-    onDragEnter={handleHover}
-    onDragLeave={handleExitHover}
-    accept={accepted_files}
-    onDropRejected={() => {
-      handleExitHover();
-      toast({
-        variant: "destructive",
-        title: "Error uploading your file(s)",
-        description: "Allowed Files: Audio, Video and Images.",
-        duration: 5000,
-      });
-    }}
-    onError={() => {
-      handleExitHover();
-      toast({
-        variant: "destructive",
-        title: "Error uploading your file(s)",
-        description: "Allowed Files: Audio, Video and Images.",
-        duration: 5000,
-      });
-    }}
-  >
-    {({ getRootProps, getInputProps }) => (
-      <div
-        {...getRootProps()}
-        className={`bg-[#E593E614] h-72 lg:h-80 xl:h-96 rounded-3xl shadow-sm border-[#E593E680] border-4 border-dashed cursor-pointer flex items-center justify-center`}
-      >
-        <input {...getInputProps()} />
-        <div className="space-y-4 text-[#800080]">
-          {is_hover ? (
-            <>
-              <div className="justify-center flex text-6xl">
-                <LuFileSymlink />
-              </div>
-              <h3 className="text-center font-medium text-2xl">
-                Yes, right there
-              </h3>
-            </>
-          ) : (
-            <>
-              <div className="justify-center flex text-6xl">
-                <img src={docpick.src} alt="document icon" />
-              </div>
-              <h3 className="text-center font-medium text-2xl">
-              Drag and drop or <span className="text-[#E593E6] underline">browse</span> 
-              </h3>
-            </>
-          )}
+      onDrop={handleUpload}
+      onDragEnter={handleHover}
+      onDragLeave={handleExitHover}
+      accept={accepted_files}
+      onDropRejected={() => {
+        handleExitHover();
+        toast({
+          variant: "destructive",
+          title: "Error uploading your file(s)",
+          description: "Allowed Files: Audio, Video and Images.",
+          duration: 5000,
+        });
+      }}
+      onError={() => {
+        handleExitHover();
+        toast({
+          variant: "destructive",
+          title: "Error uploading your file(s)",
+          description: "Allowed Files: Audio, Video and Images.",
+          duration: 5000,
+        });
+      }}
+    >
+      {({ getRootProps, getInputProps }) => (
+        <div
+          {...getRootProps()}
+          className={`bg-[#E593E614] h-72 lg:h-80 xl:h-96 rounded-3xl shadow-sm border-[#E593E680] border-4 border-dashed cursor-pointer flex items-center justify-center`}
+        >
+          <input {...getInputProps()} />
+          <div className="space-y-4 text-[#800080]">
+            {is_hover ? (
+              <>
+                <div className="justify-center flex text-6xl">
+                  <LuFileSymlink />
+                </div>
+                <h3 className="text-center font-medium text-2xl">
+                  Yes, right there
+                </h3>
+              </>
+            ) : (
+              <>
+                <div className="justify-center flex text-6xl">
+                  <img src={docpick.src} alt="document icon" />
+                </div>
+                <h3 className="text-center font-medium text-2xl">
+                  Drag and drop or <span className="text-[#E593E6] underline">browse</span>
+                </h3>
+              </>
+            )}
+          </div>
         </div>
-      </div>
-    )}
-  </ReactDropzone>
-);
+      )}
+    </ReactDropzone>
+  );
 }
