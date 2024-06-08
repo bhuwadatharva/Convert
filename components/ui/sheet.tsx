@@ -4,21 +4,25 @@ import * as React from "react"
 import * as SheetPrimitive from "@radix-ui/react-dialog"
 import { cva, type VariantProps } from "class-variance-authority"
 import { X } from "lucide-react"
-
 import { cn } from "@/utils"
 
 const Sheet = SheetPrimitive.Root
-
 const SheetTrigger = SheetPrimitive.Trigger
-
 const SheetClose = SheetPrimitive.Close
 
-const SheetPortal = ({
+interface ExtendedDialogPortalProps extends Omit<React.ComponentPropsWithoutRef<typeof SheetPrimitive.Portal>, 'className'> {
+  className?: string;
+}
+
+const SheetPortal: React.FC<ExtendedDialogPortalProps> = ({
   className,
   ...props
-}: SheetPrimitive.DialogPortalProps) => (
-  <SheetPrimitive.Portal className={cn(className)} {...props} />
+}) => (
+  <SheetPrimitive.Portal {...props}>
+    {props.children}
+  </SheetPrimitive.Portal>
 )
+
 SheetPortal.displayName = SheetPrimitive.Portal.displayName
 
 const SheetOverlay = React.forwardRef<
@@ -34,6 +38,7 @@ const SheetOverlay = React.forwardRef<
     ref={ref}
   />
 ))
+
 SheetOverlay.displayName = SheetPrimitive.Overlay.displayName
 
 const sheetVariants = cva(
@@ -42,11 +47,9 @@ const sheetVariants = cva(
     variants: {
       side: {
         top: "inset-x-0 top-0 border-b data-[state=closed]:slide-out-to-top data-[state=open]:slide-in-from-top",
-        bottom:
-          "inset-x-0 bottom-0 border-t data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom",
+        bottom: "inset-x-0 bottom-0 border-t data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom",
         left: "inset-y-0 left-0 h-full w-3/4 border-r data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left sm:max-w-sm",
-        right:
-          "inset-y-0 right-0 h-full w-3/4  border-l data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right sm:max-w-sm",
+        right: "inset-y-0 right-0 h-full w-3/4  border-l data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right sm:max-w-sm",
       },
     },
     defaultVariants: {
@@ -78,6 +81,7 @@ const SheetContent = React.forwardRef<
     </SheetPrimitive.Content>
   </SheetPortal>
 ))
+
 SheetContent.displayName = SheetPrimitive.Content.displayName
 
 const SheetHeader = ({
@@ -92,6 +96,7 @@ const SheetHeader = ({
     {...props}
   />
 )
+
 SheetHeader.displayName = "SheetHeader"
 
 const SheetFooter = ({
@@ -106,6 +111,7 @@ const SheetFooter = ({
     {...props}
   />
 )
+
 SheetFooter.displayName = "SheetFooter"
 
 const SheetTitle = React.forwardRef<
@@ -118,6 +124,7 @@ const SheetTitle = React.forwardRef<
     {...props}
   />
 ))
+
 SheetTitle.displayName = SheetPrimitive.Title.displayName
 
 const SheetDescription = React.forwardRef<
@@ -130,6 +137,7 @@ const SheetDescription = React.forwardRef<
     {...props}
   />
 ))
+
 SheetDescription.displayName = SheetPrimitive.Description.displayName
 
 export {
