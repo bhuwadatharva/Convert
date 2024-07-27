@@ -1,11 +1,15 @@
 // imports
 import Dropzone from "@/components/dropzone";
 
+
 export default function Home() {
-  return (          
-          <div className="ml-80">
+
+  return (       
+    <>   
+   
+          <div>
           <Dropzone />
           </div>
-
+          </>
   );
 }
