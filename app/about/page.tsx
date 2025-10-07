@@ -25,8 +25,10 @@ export default function About() {
         <div className="lg:ml-44 text-center lg:text-left">
           <h1 className="font-bold text-3xl lg:text-5xl">ABOUT US</h1>
           <p className="mt-6 lg:mt-10 text-lg lg:text-xl">
-            "Unlock the power of seamless document conversion with our PDF
-            converter website..."
+            <p className="mt-6 lg:mt-10 text-lg lg:text-xl">
+              Unlock the power of seamless document conversion with our PDF
+              converter website...
+            </p>
           </p>
         </div>
         <Image

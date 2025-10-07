@@ -1,40 +1,18 @@
-"use client";
+import Image from "next/image";
 import privacy from "@/public/images/privacy.png";
-import { useEffect } from "react";
 
-export const Metadata = {
+export const metadata = {
   title: "Privacy Policy - Privacy policy of the DocShift",
-  description: `Here are our privacy policy for the user that how we protect your data in our software`,
+  description:
+    "Here are our privacy policy for the user that how we protect your data in our software",
 };
 
 export default function PrivacyPolicy() {
-  useEffect(() => {
-    const meta = document.createElement("meta");
-    meta.name = "description";
-    meta.content =
-      "Convert the video to other formats or different audio formats with the help of Docshift - file converter";
-    document.head.appendChild(meta);
-
-    const title = document.createElement("title");
-    title.textContent = "Privacy Policy - Privacy policy of the DocShift";
-    document.head.appendChild(title);
-
-    const creator = document.createElement("meta");
-    creator.name = "creator";
-    creator.content = "GDSC WEB DEV TEAM";
-    document.head.appendChild(creator);
-
-    const keywords = document.createElement("meta");
-    keywords.name = "keywords";
-    keywords.content =
-      "image converter, video converter, audio converter, unlimited image converter, unlimited video converter";
-    document.head.appendChild(keywords);
-  }, []);
   return (
     <div className="p-4">
       <div className="flex justify-center">
-        <img
-          src={privacy.src}
+        <Image
+          src={privacy}
           className="w-full max-w-md lg:ml-[500px]"
           alt="Privacy Policy"
         />
