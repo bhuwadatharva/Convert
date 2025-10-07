@@ -15,27 +15,31 @@ import { MdDone } from "react-icons/md";
 import { Badge } from "@/components/ui/badge";
 import { HiOutlineDownload } from "react-icons/hi";
 import { BiError } from "react-icons/bi";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import loadFfmpeg from "@/utils/load-ffmpeg";
 import type { Action } from "@/types";
 import { FFmpeg } from "@ffmpeg/ffmpeg";
 import docpick from "@/public/images/docpick.png";
+import { Metadata } from "next";
+import Head from "next/head";
 
 const extensions = {
   audio: ["mp3", "wav", "ogg", "aac", "wma", "flac", "m4a"],
 };
 
-export const Metadata = {
-  title: "Audio Converter- Convert the audio",
-  description: `Convert the audio in a different audio format with the help of Doshift-file COnverter`,
-  creator: "GDSC WEB DEV TEAM",
-  keywords: "image converter, video converter, audio converter, unlimited image converter, unlimited video converter",
+const metadata: Metadata = {
+  title: "Audio Converter",
+  description: "Convert the video in audio and other format",
 };
 
-
-export default function audiodrop() {
- 
+export default function Audiodrop() {
   const { toast } = useToast();
   const [is_hover, setIsHover] = useState<boolean>(false);
   const [actions, setActions] = useState<Action[]>([]);
@@ -45,7 +49,32 @@ export default function audiodrop() {
   const [is_converting, setIsConverting] = useState<boolean>(false);
   const [is_done, setIsDone] = useState<boolean>(false);
   const ffmpegRef = useRef<any>(null);
-  const accepted_files = { "audio/*": extensions.audio.map(ext => `.${ext}`) };
+  const accepted_files = {
+    "audio/*": extensions.audio.map((ext) => `.${ext}`),
+  };
+
+  useEffect(() => {
+    const meta = document.createElement("meta");
+    meta.name = "description";
+    meta.content =
+      "Convert the video to other formats or different audio formats with the help of Docshift - file converter";
+    document.head.appendChild(meta);
+
+    const title = document.createElement("title");
+    title.textContent = "Audio Converter - Convert the audio";
+    document.head.appendChild(title);
+
+    const creator = document.createElement("meta");
+    creator.name = "creator";
+    creator.content = "GDSC WEB DEV TEAM";
+    document.head.appendChild(creator);
+
+    const keywords = document.createElement("meta");
+    keywords.name = "keywords";
+    keywords.content =
+      "image converter, video converter, audio converter, unlimited image converter, unlimited video converter";
+    document.head.appendChild(keywords);
+  }, []);
 
   // functions
   const reset = () => {
@@ -224,7 +253,9 @@ export default function audiodrop() {
               <div className="text-muted-foreground text-md flex items-center gap-4">
                 <span>Convert to</span>
                 <Select
-                  onValueChange={(value) => updateAction(action.file_name, value)}
+                  onValueChange={(value) =>
+                    updateAction(action.file_name, value)
+                  }
                   value={action.to || ""}
                 >
                   <SelectTrigger className="w-32 outline-none focus:outline-none focus:ring-0 text-center text-muted-foreground bg-background text-md font-medium">
@@ -292,64 +323,92 @@ export default function audiodrop() {
   }
 
   return (
-    <div className="p-4 lg:ml-80">
-      <ReactDropzone
-        onDrop={handleUpload}
-        onDragEnter={handleHover}
-        onDragLeave={handleExitHover}
-        accept={accepted_files}
-        onDropRejected={() => {
-          handleExitHover();
-          toast({
-            variant: "destructive",
-            title: "Error uploading your file(s)",
-            description: "Allowed Files: Audio only.",
-            duration: 5000,
-          });
-        }}
-        onError={() => {
-          handleExitHover();
-          toast({
-            variant: "destructive",
-            title: "Error uploading your file(s)",
-            description: "Allowed Files: Audio only.",
-            duration: 5000,
-          });
-        }}
-      >
-        {({ getRootProps, getInputProps }) => (
-          <div
-            {...getRootProps()}
-            className={`bg-[#E593E614] h-72 lg:h-80 xl:h-96 rounded-3xl shadow-sm border-[#800080] border-4 border-dashed cursor-pointer flex items-center justify-center`}
-          >
-            <input {...getInputProps()} />
-            <div className="space-y-4 text-[#800080]">
-              {is_hover ? (
-                <>
-                  <div className="justify-center flex text-6xl">
-                    <LuFileSymlink />
-                  </div>
-                  <h3 className="text-center font-medium text-2xl">
-                    Yes, right there
-                  </h3>
-                </>
-              ) : (
-                <>
-                  <div className="justify-center flex text-6xl">
-                    <img src={docpick.src} alt="document icon" />
-                  </div>
-                  <h3 className="text-center font-medium text-2xl">
-                    Drag and drop or <span className="text-[#E593E6] underline">upload Audio</span>
-                  </h3>
-                </>
-              )}
+    <div>
+      <Head>
+        <title>Audio Converter - Convert the Audio</title>
+        <meta
+          name="description"
+          content="Convert the video to other formats or different audio formats with the help of Docshift - file converter"
+        />
+        <meta name="creator" content="GDSC WEB DEV TEAM" />
+        <meta
+          name="keywords"
+          content="image converter, video converter, audio converter, unlimited image converter, unlimited video converter"
+        />
+      </Head>
+      <div className="p-4 lg:ml-80">
+        <ReactDropzone
+          onDrop={handleUpload}
+          onDragEnter={handleHover}
+          onDragLeave={handleExitHover}
+          accept={accepted_files}
+          onDropRejected={() => {
+            handleExitHover();
+            toast({
+              variant: "destructive",
+              title: "Error uploading your file(s)",
+              description: "Allowed Files: Audio only.",
+              duration: 5000,
+            });
+          }}
+          onError={() => {
+            handleExitHover();
+            toast({
+              variant: "destructive",
+              title: "Error uploading your file(s)",
+              description: "Allowed Files: Audio only.",
+              duration: 5000,
+            });
+          }}
+        >
+          {({ getRootProps, getInputProps }) => (
+            <div
+              {...getRootProps()}
+              className={`bg-[#E593E614] h-72 lg:h-80 xl:h-96 rounded-3xl shadow-sm border-[#800080] border-4 border-dashed cursor-pointer flex items-center justify-center`}
+            >
+              <input {...getInputProps()} />
+              <div className="space-y-4 text-[#800080]">
+                {is_hover ? (
+                  <>
+                    <div className="justify-center flex text-6xl">
+                      <LuFileSymlink />
+                    </div>
+                    <h3 className="text-center font-medium text-2xl">
+                      Yes, right there
+                    </h3>
+                  </>
+                ) : (
+                  <>
+                    <div className="justify-center flex text-6xl">
+                      <img src={docpick.src} alt="document icon" />
+                    </div>
+                    <h3 className="text-center font-medium text-2xl">
+                      Drag and drop or{" "}
+                      <span className="text-[#E593E6] underline">
+                        upload Audio
+                      </span>
+                    </h3>
+                  </>
+                )}
+              </div>
             </div>
-          </div>
-        )}
-      </ReactDropzone>
-      <div className="lg:hidden mt-4 flex space-x-4">
-        <Button onClick={() => window.location.href = '/'} className="bg-[#F0EEF7] border-[#800080] border-2">Image Converter</Button>
-        <Button onClick={() => window.location.href = '/videodrop'} className="bg-[#F0EEF7] border-[#800080] border-2" title="Video Converter">Video Converter</Button>
+          )}
+        </ReactDropzone>
+        <div className="lg:hidden mt-4 flex space-x-4">
+          <Button
+            onClick={() => (window.location.href = "/")}
+            className="bg-[#F0EEF7] border-[#800080] border-2"
+          >
+            Image Converter
+          </Button>
+          <Button
+            onClick={() => (window.location.href = "/videodrop")}
+            className="bg-[#F0EEF7] border-[#800080] border-2"
+            title="Video Converter"
+          >
+            Video Converter
+          </Button>
+        </div>
       </div>
     </div>
   );

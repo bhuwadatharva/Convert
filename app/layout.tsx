@@ -9,19 +9,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from "next-themes";
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata: Metadata = {
-    title: "DocShift-File Converter",
-    description: `Unlock the power of seamless file transformation with Transmuter – your ultimate digital alchemist! Say goodbye to format woes as you embark on a journey of effortless conversion. Whether it's images, documents, audio, or video, Transmuter transmutes your files with precision and speed, tailored to your needs. Experience the magic of compatibility as you effortlessly switch between formats, breathing new life into your digital creations. Join the ranks of satisfied users who've discovered the transformative prowess of Transmuter – where every file finds its perfect form`,
-    creator: "ATHARVA BHUWAD",
-    keywords: "image converter, video converter, audio converter, unlimited image converter, unlimited video converter",
-    openGraph: {
-        title: "DocShift-File Converter",
-        description: "Unlock the power of seamless file transformation with Transmuter – your ultimate digital alchemist! Say goodbye to format woes as you embark on a journey of effortless conversion. Whether it's images, documents, audio, or video, Transmuter transmutes your files with precision and speed, tailored to your needs. Experience the magic of compatibility as you effortlessly switch between formats, breathing new life into your digital creations. Join the ranks of satisfied users who've discovered the transformative prowess of Transmuter – where every file finds its perfect form",
-        type: "website",
-        locale: "en_us",
-        url: "",
-    }
-};
+
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (

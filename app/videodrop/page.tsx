@@ -1,6 +1,5 @@
 "use client";
 
-import { FiUploadCloud } from "react-icons/fi";
 import { LuFileSymlink } from "react-icons/lu";
 import { MdClose } from "react-icons/md";
 import ReactDropzone from "react-dropzone";
@@ -16,7 +15,6 @@ import { MdDone } from "react-icons/md";
 import { Badge } from "@/components/ui/badge";
 import { HiOutlineDownload } from "react-icons/hi";
 import { BiError } from "react-icons/bi";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Select,
   SelectContent,
@@ -29,8 +27,8 @@ import loadFfmpeg from "@/utils/load-ffmpeg";
 import type { Action } from "@/types";
 import { FFmpeg } from "@ffmpeg/ffmpeg";
 import docpick from "@/public/images/docpick.png";
-import Head from 'next/head'; // Import Head
 import { Metadata } from "next";
+import Head from "next/head";
 
 const extensions = {
   video: ["mp4", "mkv", "mov", "avi", "flv", "wmv"],
@@ -38,11 +36,11 @@ const extensions = {
 };
 
 const metadata: Metadata = {
-  title: "Video Converter",
-  description: "Convert the video in audio and other format"
-}
+  title: "Audio Converter",
+  description: "Convert the video in audio and other format",
+};
 
-export default function VideoDrop() {
+export default function Videodrop() {
   const { toast } = useToast();
   const [is_hover, setIsHover] = useState<boolean>(false);
   const [actions, setActions] = useState<Action[]>([]);
@@ -52,30 +50,30 @@ export default function VideoDrop() {
   const [is_converting, setIsConverting] = useState<boolean>(false);
   const [is_done, setIsDone] = useState<boolean>(false);
   const ffmpegRef = useRef<any>(null);
-  const [defaultValues, setDefaultValues] = useState<string>("video");
-  const [selected, setSelected] = useState<string>("...");
   const accepted_files = {
     "video/*": [".mp4", ".mkv", ".mov", ".avi", ".flv", ".wmv"],
   };
 
   useEffect(() => {
-    const meta = document.createElement('meta');
-    meta.name = 'description';
-    meta.content = 'Convert the video to other formats or different audio formats with the help of Docshift - file converter';
+    const meta = document.createElement("meta");
+    meta.name = "description";
+    meta.content =
+      "Convert the video to other formats or different audio formats with the help of Docshift - file converter";
     document.head.appendChild(meta);
 
-    const title = document.createElement('title');
-    title.textContent = 'Video Converter - Convert the video';
+    const title = document.createElement("title");
+    title.textContent = "Audio Converter - Convert the audio";
     document.head.appendChild(title);
 
-    const creator = document.createElement('meta');
-    creator.name = 'creator';
-    creator.content = 'GDSC WEB DEV TEAM';
+    const creator = document.createElement("meta");
+    creator.name = "creator";
+    creator.content = "GDSC WEB DEV TEAM";
     document.head.appendChild(creator);
 
-    const keywords = document.createElement('meta');
-    keywords.name = 'keywords';
-    keywords.content = 'image converter, video converter, audio converter, unlimited image converter, unlimited video converter';
+    const keywords = document.createElement("meta");
+    keywords.name = "keywords";
+    keywords.content =
+      "image converter, video converter, audio converter, unlimited image converter, unlimited video converter";
     document.head.appendChild(keywords);
   }, []);
 
@@ -170,6 +168,7 @@ export default function VideoDrop() {
     setActions(
       actions.map((action): Action => {
         if (action.file_name === file_name) {
+          console.log("FOUND");
           return {
             ...action,
             to,
@@ -208,14 +207,135 @@ export default function VideoDrop() {
     setIsLoaded(true);
   };
 
+  // returns
+  if (actions.length) {
+    return (
+      <div className="space-y-6 p-4 lg:p-0">
+        {actions.map((action: Action, i: any) => (
+          <div
+            key={i}
+            className="w-full py-4 space-y-2 lg:py-0 relative cursor-pointer rounded-xl border h-fit lg:h-20 px-4 lg:px-10 flex flex-wrap lg:flex-nowrap items-center justify-between border-[#EFC6F0]"
+          >
+            {!is_loaded && (
+              <Skeleton className="h-full w-full -ml-10 cursor-progress absolute rounded-xl" />
+            )}
+            <div className="flex gap-4 items-center">
+              <span className="text-2xl text-orange-600">
+                {fileToIcon(action.file_type)}
+              </span>
+              <div className="flex items-center gap-1 w-full lg:w-96">
+                <span className="text-md font-medium overflow-x-hidden">
+                  {compressFileName(action.file_name)}
+                </span>
+                <span className="text-muted-foreground text-sm">
+                  ({bytesToSize(action.file_size)})
+                </span>
+              </div>
+            </div>
+
+            {action.is_error ? (
+              <Badge className="flex gap-2">
+                <span>Error Converting File</span>
+                <BiError />
+              </Badge>
+            ) : action.is_converted ? (
+              <Badge className="flex gap-2 border-[#E593E6]">
+                <span>Done</span>
+                <MdDone />
+              </Badge>
+            ) : action.is_converting ? (
+              <Badge className="flex gap-2">
+                <span>Converting</span>
+                <span className="animate-spin">
+                  <ImSpinner3 />
+                </span>
+              </Badge>
+            ) : (
+              <div className="text-muted-foreground text-md flex items-center gap-4">
+                <span>Convert to</span>
+                <Select
+                  onValueChange={(value) =>
+                    updateAction(action.file_name, value)
+                  }
+                  value={action.to || ""}
+                >
+                  <SelectTrigger className="w-32 outline-none focus:outline-none focus:ring-0 text-center text-muted-foreground bg-background text-md font-medium">
+                    <SelectValue placeholder="" />
+                  </SelectTrigger>
+                  <SelectContent className="h-fit">
+                    <div className="grid grid-cols-2 gap-2 w-fit bg-white">
+                      {extensions.audio.map((elt, i) => (
+                        <div key={i} className="col-span-1 text-center">
+                          <SelectItem value={elt} className="mx-auto">
+                            {elt}
+                          </SelectItem>
+                        </div>
+                      ))}
+                    </div>
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
+
+            {action.is_converted ? (
+              <Button onClick={() => download(action)}>Download</Button>
+            ) : (
+              <span
+                onClick={() => deleteAction(action)}
+                className="cursor-pointer hover:bg-muted rounded-full h-10 w-10 flex items-center justify-center text-2xl text-foreground"
+              >
+                <MdClose />
+              </span>
+            )}
+          </div>
+        ))}
+        <div className="flex w-full justify-end">
+          {is_done ? (
+            <div className="space-y-4 w-fit">
+              <Button
+                className="rounded-xl font-semibold relative py-4 text-md flex gap-2 items-center w-full bg-[#E593E6]"
+                onClick={downloadAll}
+              >
+                {actions.length > 1 ? "Download All" : "Download"}
+                <HiOutlineDownload />
+              </Button>
+              <Button onClick={reset} className="rounded-xl">
+                Convert Another File(s)
+              </Button>
+            </div>
+          ) : (
+            <Button
+              disabled={!is_ready || is_converting}
+              className="rounded-xl font-semibold relative py-4 text-md flex items-center w-44 bg-[#E593E6]"
+              onClick={convert}
+            >
+              {is_converting ? (
+                <span className="animate-spin text-lg">
+                  <ImSpinner3 />
+                </span>
+              ) : (
+                <span>Convert Now</span>
+              )}
+            </Button>
+          )}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div>
-      {/* Setting the metadata */}
       <Head>
-        <title>Video Converter - Convert the video</title>
-        <meta name="description" content="Convert the video to other formats or different audio formats with the help of Docshift - file converter" />
+        <title>Audio Converter - Convert the Audio</title>
+        <meta
+          name="description"
+          content="Convert the video to other formats or different audio formats with the help of Docshift - file converter"
+        />
         <meta name="creator" content="GDSC WEB DEV TEAM" />
-        <meta name="keywords" content="image converter, video converter, audio converter, unlimited image converter, unlimited video converter" />
+        <meta
+          name="keywords"
+          content="image converter, video converter, audio converter, unlimited image converter, unlimited video converter"
+        />
       </Head>
       <div className="p-4 lg:ml-80">
         <ReactDropzone
@@ -228,7 +348,7 @@ export default function VideoDrop() {
             toast({
               variant: "destructive",
               title: "Error uploading your file(s)",
-              description: "Allowed Files: Video files only.",
+              description: "Allowed Files: Audio only.",
               duration: 5000,
             });
           }}
@@ -237,7 +357,7 @@ export default function VideoDrop() {
             toast({
               variant: "destructive",
               title: "Error uploading your file(s)",
-              description: "Allowed Files: Video files only.",
+              description: "Allowed Files: Audio only.",
               duration: 5000,
             });
           }}
@@ -264,8 +384,10 @@ export default function VideoDrop() {
                       <img src={docpick.src} alt="document icon" />
                     </div>
                     <h3 className="text-center font-medium text-2xl">
-                      Drag and drop or
-                      <span className="text-[#E593E6] underline">upload Video</span>
+                      Drag and drop or{" "}
+                      <span className="text-[#E593E6] underline">
+                        upload Video
+                      </span>
                     </h3>
                   </>
                 )}
@@ -274,8 +396,19 @@ export default function VideoDrop() {
           )}
         </ReactDropzone>
         <div className="lg:hidden mt-4 flex space-x-4">
-          <Button onClick={() => window.location.href = '/'} className="bg-[#F0EEF7] border-[#800080] border-2" >Image Converter</Button>
-          <Button onClick={() => window.location.href = '/audiodrop'} className="bg-[#F0EEF7] border-[#800080] border-2" >Audio Converter</Button>
+          <Button
+            onClick={() => (window.location.href = "/")}
+            className="bg-[#F0EEF7] border-[#800080] border-2"
+          >
+            Image Converter
+          </Button>
+          <Button
+            onClick={() => (window.location.href = "/videodrop")}
+            className="bg-[#F0EEF7] border-[#800080] border-2"
+            title="Video Converter"
+          >
+            Video Converter
+          </Button>
         </div>
       </div>
     </div>

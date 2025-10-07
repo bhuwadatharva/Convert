@@ -210,8 +210,9 @@ export default function Dropzone() {
                 </Select>
               </div>
             )}
-
-            {!action.is_converted && !action.is_converting && (
+            {action.is_converted ? (
+              <Button onClick={() => download(action)}>Download</Button>
+            ) : (
               <span
                 onClick={() => deleteAction(action)}
                 className="cursor-pointer hover:bg-muted rounded-full h-10 w-10 flex items-center justify-center text-2xl text-foreground"
